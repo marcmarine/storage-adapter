@@ -1,0 +1,25 @@
+{
+  "name": "storage-adapter",
+  "version": "0.0.0",
+  "description": "A file-based storage adapter for storj-lib",
+  "main": "index.js",
+  "scripts": {
+    "test": "./node_modules/.bin/mocha test/** --recursive --exit"
+  },
+  "dependencies": {
+    "diskusage": "^1.2.0",
+    "storj-lib": "internxt/core#v8.7.3-beta"
+  },
+  "author": {
+    "name": "Marc Mariné",
+    "url": "https://github.com/marcmarine"
+  },
+  "devDependencies": {
+    "chai": "^2.2.0",
+    "mocha": "^2.2.4",
+    "rimraf": "^2.7.1",
+    "mkdirp": "^0.5.1",
+    "sinon": "^7.5.0"
+  },
+  "license": "ISC"
+}
