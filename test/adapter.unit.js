@@ -35,7 +35,7 @@ describe('FileStorageAdapter', function() {
     store = new FileStorageAdapter(tmpdir());
   });
 
-   describe('@constructor', function() {
+  describe('@constructor', function() {
 
     it('should create instance without the new keyword', function() {
       expect(
@@ -44,7 +44,6 @@ describe('FileStorageAdapter', function() {
     });
 
   });
-
 
   describe('#_validatePath', function() {
 
@@ -67,7 +66,7 @@ describe('FileStorageAdapter', function() {
       });
     });
 
-    it('should throw if the write fails', function(done) {
+    it('should callback error if the write fails', function(done) {
       const stub = sinon.stub(fs, 'writeFile').callsArgWith(2, new Error('Failed'));
       
       store._put(hash, item, function(err) {
@@ -78,9 +77,7 @@ describe('FileStorageAdapter', function() {
       });
     });
 
-
   });
-
 
   describe('#_get', function() {
 
@@ -101,7 +98,7 @@ describe('FileStorageAdapter', function() {
 
   });
 
-   describe('#_peek', function() {
+  describe('#_peek', function() {
 
     it('should return the stored item', function(done) {
       store._peek(hash, function(err, item) {
@@ -113,7 +110,7 @@ describe('FileStorageAdapter', function() {
 
    });
 
-   describe('#_del', function() {
+  describe('#_del', function() {
 
     it('should delete the shard if it exists', function(done) {
       store._del(hash, function(err) {
