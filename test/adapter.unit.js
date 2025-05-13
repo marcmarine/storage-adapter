@@ -89,7 +89,7 @@ describe('FileStorageAdapter', function() {
       });
     });
 
-    it('should callback error if write stream fails', function(done) {
+    it('should callback error if no shard found', function(done) {
       store._get('wrong key', function(err) {
         expect(err.message).to.equal('Not found');
         done();
