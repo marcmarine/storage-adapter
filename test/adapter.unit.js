@@ -57,7 +57,7 @@ describe('FileStorageAdapter', function() {
 
   });
 
-  describe('#_put🔥', function() {
+  describe('#_put', function() {
 
     it('should store the item', function(done) {
       store._put(hash, item, function(err) {
@@ -66,13 +66,24 @@ describe('FileStorageAdapter', function() {
       });
     });
 
-    it('should callback error if the write fails', function(done) {
-      const stub = sinon.stub(fs, 'writeFile').callsArgWith(2, new Error('Failed'));
+    it('should callback error if the item already exists', function(done) {     
+      store._put(hash, item, function(err) {
+        expect(err).to.exist;
+        expect(err.message).to.equal('Item already exists at key: ' + hash);
+        done();
+      });
+    });
+
+    it('should callback error if the item write fails', function(done) {
+      const fakeFileDescriptor = 123
+      const _open = sinon.stub(fs, 'open').callsArgWith(2, null, fakeFileDescriptor);
+      const _writeFile = sinon.stub(fs, 'writeFile').callsArgWith(2, new Error('Failed'));
       
       store._put(hash, item, function(err) {
         expect(err).to.exist;
         expect(err.message).to.equal('Failed');
-        stub.restore();
+        _open.restore();
+        _writeFile.restore();
         done();
       });
     });
@@ -89,9 +100,9 @@ describe('FileStorageAdapter', function() {
       });
     });
 
-    it('should callback error if no shard found', function(done) {
+    it('should callback error if no item found', function(done) {
       store._get('wrong key', function(err) {
-        expect(err.message).to.equal('Not found');
+        expect(err.message).to.equal('Item not found');
         done();
       });
     });
@@ -108,18 +119,18 @@ describe('FileStorageAdapter', function() {
       });
     });
 
-   });
+  });
 
   describe('#_del', function() {
 
-    it('should delete the shard if it exists', function(done) {
+    it('should delete the item if it exists', function(done) {
       store._del(hash, function(err) {
         expect(err).to.equal(null);
         done();
       });
     });
   
-    it('should callback error if unlink fails', function(done) {
+    it('should callback error if item delete fails', function(done) {
       var stub = sinon.stub(fs, 'unlink').callsArgWith(
         1,
         new Error('Failed to delete')
