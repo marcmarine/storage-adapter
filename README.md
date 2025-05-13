@@ -1,6 +1,6 @@
 # File Storage Adapter
 
-A file-based storage adapter for [storj-lib](https://github.com/internxt/core), built for demonstration purposes.
+A file-based storage adapter for [storj-lib](https://github.com/storj-archived/storjshare-daemon), built for demonstration purposes.
 
 This adapter implements a simple interface for storing data shards directly on the file system. Each shard is saved as a standalone file, with the shard's hash as the filename and the file's contents being the shard data itself.
 
